@@ -110,21 +110,20 @@ GO
     @Stock INT
     AS
     BEGIN
-   
-            IF EXISTS(SELECT 1 FROM PRODUCTOS WHERE ID_Producto = @ID)
-            BEGIN
-                PRINT '¡Error! El producto ya existe.'
-            END
-        ELSE
-            BEGIN
-                INSERT INTO PRODUCTOS (ID_Producto, NOMBRE, PRECIO, STOCK)
-                VALUES (@ID, @Nombre, @Precio, @Stock);
+        IF EXISTS(SELECT 1 FROM PRODUCTOS WHERE ID_Producto = @ID)
+        BEGIN
+            PRINT '¡Error! El producto ya existe.'
+        END
+    ELSE
+        BEGIN
+            INSERT INTO PRODUCTOS (ID_Producto, NOMBRE, PRECIO, STOCK)
+            VALUES (@ID, @Nombre, @Precio, @Stock);
             
-                PRINT 'Producto guardado exitosamente.';
-            END
+            PRINT 'Producto guardado exitosamente.';
+        END
     END;
 GO
-
+    
     EXEC NuevoProducto 60, 'Sierra Circular', 12500.00, 5;            
     
    SELECT 
@@ -136,3 +135,4 @@ GO
     JOIN DETALLE_VENTA D ON V.ID_Venta = D.ID_Venta
     GROUP BY C.NOMBRE, C.APELLIDO
     ORDER BY TOTAL_GASTADO DESC;
+
